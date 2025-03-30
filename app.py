@@ -59,7 +59,7 @@ for categorie, liens in liens_par_categorie.items():
 html += "</body>\n</html>"
 
 #Sauvegarde dans un fichier HTML
-with open ('liens.html', 'w', encoding='utf-8') as f:
+with open ('index.html', 'w', encoding='utf-8') as f:
     f.write(html)
 
 
