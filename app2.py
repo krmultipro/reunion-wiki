@@ -3,21 +3,22 @@ import csv
 #Dictionnaire pour classer les liens par catégorie
 liens_par_categorie = {}
 
-#Lecture du fichier CSV
+# Lecture du fichier CSV avec gestion des guillemets
 with open('liens.csv', newline='', encoding='utf-8') as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader : 
-        categorie = row['categorie']
-        nom = row['nom_du_site']
-        
-        if row['ville']:
-            ville_html = f' - {row[" ville"]}'
-        else:
-            ville_html = ""
-        
-        lien = row['lien']
-        description = row['description'].replace('"', '').strip()
-        
+    reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    next(reader)  # sauter la première ligne (en-tête)
+    for row in reader:
+        if len(row) < 5:
+            print(" Ligne ignorée (colonnes manquantes) :", row)
+            continue
+
+        categorie = row[0].strip()
+        nom = row[1].strip()
+        ville = row[2].strip()
+        lien = row[3].strip()
+        description = row[4].strip()
+
+        ville_html = f' – {ville}' if ville else ""        
         #Créer une liste si elle n'existe pas encore
         if categorie not in liens_par_categorie :
             liens_par_categorie[categorie] = []
